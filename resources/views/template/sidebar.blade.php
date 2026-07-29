@@ -240,10 +240,10 @@
             {{-- Pengecheckan path saat ini --}}
             @php
                 $masterMenu =
-                    request()->is('categories') ||
-                    request()->is('locations') ||
-                    request()->is('employees') ||
-                    request()->is('departments');
+                    request()->is('categories*') ||
+                    request()->is('locations*') ||
+                    request()->is('employees*') ||
+                    request()->is('departments*');
             @endphp
 
             <!--begin::Sidebar Menu-->
@@ -286,9 +286,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="/departments"
-                                class="nav-link {{ request()->is('departments') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('departments*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Departments</p>
+                                <p>Departments </p>
                             </a>
                         </li>
                         <li class="nav-item">

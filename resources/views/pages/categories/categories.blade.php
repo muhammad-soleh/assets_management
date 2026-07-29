@@ -1,6 +1,7 @@
 @extends('template.main')
-@section('judul', 'Employees')
+@section('judul', 'Categories')
 @section('main')
+
     <div class="app-content">
         <!--begin::Container-->
         <div class="container-fluid">
@@ -9,43 +10,31 @@
                 <div class="col">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3 class="card-title">Table Employees</h3>
-
+                            <h3 class="card-title">Table categories</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="mb-4">
-                                <a href="/employees/create" class="btn btn-primary">Add Employee</a>
+                                <a href="/categories/create" class="btn btn-primary">Add Categories</a>
                             </div>
                             <table class="table table-bordered" role="table">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px" scope="col">#</th>
-                                        <th style="width: 70px" scope="col">Employee Number</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Department</th>
-                                        <th scope="col">Location</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Position</th>
-                                        <th scope="col">Roles</th>
+                                        <th scope="col">Category Name</th>
+                                        <th scope="col">Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($employees as $employee)
+                                    @foreach ($categories as $category)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $employee->employee_number }}</td>
-                                            <td>{{ $employee->user->name }}</td>
-                                            <td>{{ $employee->user->email }}</td>
-                                            <td>{{ $employee->department->name }}</td>
-                                            <td>{{ $employee->location->name }}</td>
-                                            <td>{{ $employee->phone }}</td>
-                                            <td>{{ $employee->position }}</td>
-                                            <td>{{ $employee->user->role->name }}</td>
-                                            <td><a href="/employees/{{ $employee->id }}/edit"
-                                                    class="btn btn-sm btn-warning">Edit</a></td>
+                                            <td>{{ $category->name }}</td>
+                                            <td>{{ $category->description }}</td>
+                                            <td><a href="/categories/{{ $category->id }}/edit"
+                                                    class="btn btn-sm btn-warning">Edit</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

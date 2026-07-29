@@ -13,9 +13,9 @@ class RoleController extends Controller
         return view('pages.roles.roles', ['roles' => $roles]);
     }
 
-    public function form()
+    public function create()
     {
-        return view('pages.roles.form');
+        return view('pages.roles.create');
     }
 
     public function submit(Request $request)
@@ -27,5 +27,21 @@ class RoleController extends Controller
 
         Role::create($validated);
         return redirect('/roles')->with('success', 'Roles Added!');
+    }
+
+    public function edit(Role $role)
+    {
+        return view('pages.roles.edit', compact('role'));
+    }
+
+    public function update(Role $role, Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+        ]);
+
+        $role->update($validated);
+        return redirect('/roles')->with('success', 'Roles Updated!');
     }
 }

@@ -13,20 +13,37 @@ class LocationController extends Controller
         return view('pages.locations.locations', ['locations' => $locations]);
     }
 
-    public function form()
+    public function create()
     {
-        return view('pages.locations.form');
+        return view('pages.locations.create');
     }
 
     public function submit(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required',
-            'type' => 'nullable',
+            'type' => 'required',
             'description' => 'nullable',
         ]);
 
         Location::create($validated);
-        return redirect('/locations')->with('success', 'locations Added!');
+        return redirect('/locations')->with('success', 'Location Added!');
+    }
+
+    public function edit(Location $location)
+    {
+        return view('pages.locations.edit', compact('location'));
+    }
+
+    public function update(Location $location, Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'description' => 'nullable',
+        ]);
+
+        $location->update($validated);
+        return redirect('/locations')->with('success', 'Location Updated!');
     }
 }

@@ -10,6 +10,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+
+
 
 class EmployeeController extends Controller
 {
@@ -19,12 +22,12 @@ class EmployeeController extends Controller
         return view('pages.employees.employees', ['employees' => $employees]);
     }
 
-    public function form()
+    public function create()
     {
         $roles = Role::all();
         $departments = Department::all();
         $locations = Location::all();
-        return view('pages.employees.form', ['roles' => $roles, 'departments' => $departments, 'locations' => $locations]);
+        return view('pages.employees.create', ['roles' => $roles, 'departments' => $departments, 'locations' => $locations]);
     }
 
     public function submit(Request $request)
@@ -76,5 +79,139 @@ class EmployeeController extends Controller
             ]);
         });
         redirect('/employees')->with('success', 'Employee berhasil ditambahkan');
+    }
+    public function edit(Employee $employee)
+
+    {
+
+        return view('pages.employees.edit', [
+
+            'employee' => $employee->load('user', 'department', 'location'),
+
+            'departments' => Department::all(),
+
+            'locations' => Location::all(),
+
+            'roles' => Role::all(),
+
+        ]);
+    }
+
+
+    public function update(Request $request, Employee $employee)
+
+    {
+
+        $validated = $request->validate([
+
+            'email' => [
+
+                'required',
+
+                'email',
+
+                Rule::unique('users', 'email')->ignore($employee->user_id),
+
+            ],
+
+            'password' => 'nullable|min:8',
+
+            'role_id' => 'required',
+
+            'department_id' => 'required',
+
+            'location_id' => 'required',
+
+            'phone' => 'required',
+
+            'position' => 'required',
+
+            'employee_number' => [
+
+                'required',
+
+                Rule::unique('employees', 'employee_number')->ignore($employee->id),
+
+            ],
+
+            'name' => 'required',
+
+            'status' => 'required',
+
+        ]);
+
+
+
+        DB::transaction(function () use ($validated, $employee) {
+
+
+
+            // Role
+
+            if (is_numeric($validated['role_id'])) {
+
+                $role = Role::findOrFail($validated['role_id']);
+            } else {
+
+                $role = Role::firstOrCreate(
+
+                    ['name' => $validated['role_id']],
+
+                    ['description' => '']
+
+                );
+            }
+
+
+
+            // Update user
+
+            $user = $employee->user;
+
+
+
+            $user->email = $validated['email'];
+
+            $user->name = $validated['name'];
+
+            $user->role_id = $role->id;
+
+
+
+            if (!empty($validated['password'])) {
+
+                $user->password = Hash::make($validated['password']);
+            }
+
+
+
+            $user->save();
+
+
+
+            // Update employee
+
+            $employee->update([
+
+                'department_id' => $validated['department_id'],
+
+                'location_id' => $validated['location_id'],
+
+                'phone' => $validated['phone'],
+
+                'position' => $validated['position'],
+
+                'employee_number' => $validated['employee_number'],
+
+                'status' => $validated['status'],
+
+            ]);
+        });
+
+
+
+        return redirect('/employees')
+
+            ->with('success', 'Employee berhasil diupdate');
     }
 }

@@ -14,7 +14,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="mb-4">
-                                <a href="/locations/form" class="btn btn-primary">Add Location</a>
+                                <a href="/locations/create" class="btn btn-primary">Add Location</a>
                             </div>
                             <table class="table table-bordered" role="table">
                                 <thead>
@@ -23,6 +23,7 @@
                                         <th scope="col">Location</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Description</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,6 +33,8 @@
                                             <td>{{ $location->name }}</td>
                                             <td>{{ $location->type }}</td>
                                             <td>{{ $location->description }}</td>
+                                            <td><a href="/locations/{{ $location->id }}/edit"
+                                                    class="btn btn-sm btn-warning">Edit</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

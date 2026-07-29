@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
@@ -19,17 +20,42 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['admin']);
 
-Route::middleware(['admin', 'auth'])->group(function () {
-    Route::get('/employees', [EmployeeController::class, 'index']);
-    Route::get('/employees/form', [EmployeeController::class, 'form']);
-    Route::post('/employees/form', [EmployeeController::class, 'submit']);
-    Route::get('/departments', [DepartmentController::class, 'index']);
-    Route::get('/departments/form', [DepartmentController::class, 'form']);
-    Route::post('/departments/form', [DepartmentController::class, 'submit']);
-    Route::get('/locations', [LocationController::class, 'index']);
-    Route::get('/locations/form', [LocationController::class, 'form']);
-    Route::post('/locations/form', [LocationController::class, 'submit']);
-    Route::get('/roles', [RoleController::class, 'index']);
-    Route::get('/roles/form', [RoleController::class, 'form']);
-    Route::post('/roles/form', [RoleController::class, 'submit']);
+Route::prefix('employees')->controller(EmployeeController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{employee}/edit', 'edit');
+    Route::put('/{employee}/edit', 'update');
+});
+
+Route::prefix('departments')->controller(DepartmentController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{department}/edit', 'edit');
+    Route::put('/{department}/edit', 'update');
+});
+
+Route::prefix('locations')->controller(LocationController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{location}/edit', 'edit');
+    Route::put('/{location}/edit', 'update');
+});
+
+Route::prefix('roles')->controller(RoleController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{role}/edit', 'edit');
+    Route::put('/{role}/edit', 'update');
+});
+
+Route::prefix('categories')->controller(CategoryController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{category}/edit', 'edit');
+    Route::put('/{category}/edit', 'update');
 });

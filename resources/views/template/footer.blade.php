@@ -15,6 +15,20 @@
  </div>
  <!--end::App Wrapper-->
  <!--begin::Script-->
+ {{-- Sweet alert --}}
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ {{-- sweet alert --}}
+ @if (session('success'))
+     <script>
+         Swal.fire({
+             icon: 'success',
+             title: 'Berhasil',
+             text: '{{ session('success') }}',
+             timer: 2000,
+             showConfirmButton: false
+         });
+     </script>
+ @endif
  <!--begin::Third Party Plugin(OverlayScrollbars)-->
  <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
      crossorigin="anonymous"></script>

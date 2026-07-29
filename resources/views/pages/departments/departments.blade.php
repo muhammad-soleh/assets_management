@@ -14,7 +14,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="mb-4">
-                                <a href="/departments/form" class="btn btn-primary">Add Department</a>
+                                <a href="/departments/create" class="btn btn-primary">Add Department</a>
                             </div>
                             <table class="table table-bordered" role="table">
                                 <thead>
@@ -22,6 +22,7 @@
                                         <th style="width: 10px" scope="col">#</th>
                                         <th scope="col">Department Name</th>
                                         <th scope="col">Description</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -30,6 +31,8 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $department->name }}</td>
                                             <td>{{ $department->description }}</td>
+                                            <td><a href="/departments/{{ $department->id }}/edit"
+                                                    class="btn btn-sm btn-warning">Edit</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

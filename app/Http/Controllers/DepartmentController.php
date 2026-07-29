@@ -13,9 +13,9 @@ class DepartmentController extends Controller
         return view('pages.departments.departments', ['departments' => $deparments]);
     }
 
-    public function form()
+    public function create()
     {
-        return view('pages.departments.form');
+        return view('pages.departments.create');
     }
 
     public function submit(Request $request)
@@ -27,5 +27,23 @@ class DepartmentController extends Controller
 
         Department::create($validated);
         return redirect('/departments')->with('success', 'Departments Added!');
+    }
+
+    public function edit(Department $department)
+    {
+        return view('pages.departments.edit', compact('department'));
+    }
+
+    public function update(Department $department, Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $department->id,
+            'description' => 'nullable'
+        ]);
+
+        $department->update($validated);
+
+        return redirect('/departments')
+            ->with('success', 'Department berhasil diperbarui.');
     }
 }

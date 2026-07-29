@@ -15,7 +15,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="mb-4">
-                                <a href="/roles/form" class="btn btn-primary">Add Roles</a>
+                                <a href="/roles/create" class="btn btn-primary">Add Roles</a>
                             </div>
                             <table class="table table-bordered" role="table">
                                 <thead>
@@ -23,6 +23,7 @@
                                         <th style="width: 10px" scope="col">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +32,8 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $role->name }}</td>
                                             <td>{{ $role->description }}</td>
+                                            <td><a href="/roles/{{ $role->id }}/edit"
+                                                    class="btn btn-sm btn-warning">Edit</a></td>
                                         </tr>
                                     @endforeach
 
