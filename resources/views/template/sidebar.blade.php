@@ -243,6 +243,8 @@
                     request()->is('categories*') ||
                     request()->is('locations*') ||
                     request()->is('employees*') ||
+                    request()->is('suppliers*') ||
+                    request()->is('assets*') ||
                     request()->is('departments*');
             @endphp
 
@@ -273,7 +275,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/departments" class="nav-link  {{ request()->is('assets') ? 'active' : '' }}">
+                            <a href="/assets" class="nav-link  {{ request()->is('assets') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Assets</p>
                             </a>

@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -58,4 +60,20 @@ Route::prefix('categories')->controller(CategoryController::class)->group(functi
     Route::post('/create', 'submit');
     Route::get('/{category}/edit', 'edit');
     Route::put('/{category}/edit', 'update');
+});
+
+Route::prefix('suppliers')->controller(SupplierController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{supplier}/edit', 'edit');
+    Route::put('/{supplier}/edit', 'update');
+});
+
+Route::prefix('master-assets')->controller(AssetController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/create', 'create');
+    Route::post('/create', 'submit');
+    Route::get('/{asset}/edit', 'edit');
+    Route::put('/{asset}/edit', 'update');
 });
